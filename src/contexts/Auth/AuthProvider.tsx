@@ -36,6 +36,7 @@ export const AuthProvider = ({children} : {children: JSX.Element}) => {
             const data = await api.signin(login , senha);
             if(data.token && data.user){ 
                 saveToken(data.token)
+                setUser(data.user)
                 return true
             }
             return false;

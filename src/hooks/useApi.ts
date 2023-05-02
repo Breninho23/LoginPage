@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { User } from "../interface/IUser"
 
 const api = axios.create({
     baseURL: "http://localhost:8080"
@@ -9,19 +8,17 @@ const api = axios.create({
 export const useApi = () => ({
     validateToken: async(token:string) => {
         return {
-            user: { id: 3, name: 'José', email: 'jose@gmail.com' }
+            user: { id: 3, nome: 'José', login: 'jose@gmail.com' }
         };
         const response = await api.post('/validate' , {token});
         return response.data;
     },
 
-    signin: async (login: string, senha: string) => {          
-        console.log("teste")
-        const response = await api.post('/login', {login, senha})                  
-        console.log(response)
+    signin: async (login: string, senha: string) => {
+        const response = await api.post('/login', {login, senha})   
         return {
-            user: { id: 3, name: 'José', email: 'jose@gmail.com' },
-            token: '123456789'
+            user: { id: 3, nome: 'José', login: 'jose@gmail.com' },
+            token: response.data.token
         };
     },
 
