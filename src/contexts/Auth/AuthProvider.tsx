@@ -14,22 +14,24 @@ export const AuthContext = createContext<AuthContextType>(null!);
 export const AuthProvider = ({children} : {children: JSX.Element}) => {
     
 
-    const [user, setUser] = useState<User | null>(null)
-    const api = useApi()
+    const [user, setUser] = useState<User | null>(null);
+    const api = useApi();
 
     
-    useEffect(() => {
-        const validateToken = async () => {
-            const storageData = localStorage.getItem('authToken');
-            if(storageData != null){
-                const data = await api.validateToken(storageData);
-                if(data.user){
-                    setUser(data.user)
-                }
+    useEffect(() => {        
+        validateToken();
+        console.log("validei")
+    }, []);
+
+    const validateToken = async () => {
+        const storageData = localStorage.getItem('authToken');
+        if(storageData != null){            
+            const data = await api.validateToken(storageData);
+            if(data.user){
+                setUser(data.user)
             }
         }
-        validateToken();
-    }, [api]);
+    }
 
     const signin = async (login:string, senha: string) => {
         try {            
@@ -43,8 +45,7 @@ export const AuthProvider = ({children} : {children: JSX.Element}) => {
         }catch (error) {
             console.log(error);
             return false;
-        }
-        
+        }        
     }
 
     const signout = async () => {

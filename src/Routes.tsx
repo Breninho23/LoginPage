@@ -16,14 +16,20 @@ function Rota(){
          </RequireAuth>
         } /> 
         <Route path="/sobre" element={
-            <div>
-                Sobre
-            </div>} 
+            <RequireAuth>
+                <div>
+                    Sobre
+                </div>
+            </RequireAuth>
+           } 
         />        
         <Route path="*" element ={
-            <div>
-                Nada aqui amigo
-            </div>} 
+            <RequireAuth>
+                <div>
+                    Nada aqui amigo
+                </div>
+            </RequireAuth>
+            } 
         />
     </Routes>
     );    
