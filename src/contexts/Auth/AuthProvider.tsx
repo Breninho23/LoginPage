@@ -50,6 +50,7 @@ export const AuthProvider = ({children} : {children: JSX.Element}) => {
     const signout = async () => {
         await api.logout();
         setUser(null);
+        localStorage.clear();
     }
 
     const saveToken = (token : string) => {
