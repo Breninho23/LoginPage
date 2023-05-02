@@ -2,7 +2,7 @@ import { useContext, useState } from 'react'
 import Botao from '../Button'
 import CampoTexto from '../InputText'
 import './Form.css'
-import { AuthContext } from '../../contexts/Auth/AuthContext'
+import { AuthContext } from '../../contexts/Auth/AuthProvider'
 import { useNavigate } from 'react-router-dom'
 
 const Formulario = () => {
@@ -14,9 +14,11 @@ const Formulario = () => {
     const [senha, setSenha] = useState('')
     
 
-    const efetuarLogin =  async () => {               
-        if(login && senha){
+    const efetuarLogin =  async (event: React.FormEvent<HTMLFormElement>) => {          
+        event.preventDefault();     
+        if(login != '' && senha != ''){            
             const isLogged = await auth.signin(login,senha);
+            console.log("passei pelo método de logar")
             if(isLogged){
                 navigate('/home')
             } else{
@@ -45,7 +47,7 @@ const Formulario = () => {
                     aoAlterado={valor => setSenha(valor)}
                 />                        
                 <Botao>
-                    Criar Card
+                    Logar
                 </Botao>
             </form>
         </section>

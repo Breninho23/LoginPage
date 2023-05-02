@@ -1,9 +1,18 @@
-import {  useEffect, useState } from "react"
-import { AuthContext } from "./AuthContext"
+import {  useEffect, useState, createContext } from "react"
 import { useApi } from "../../hooks/useApi"
 import { User } from "../../interface/IUser"
 
+export type AuthContextType ={
+    user: User | null;
+    signin: (login:string, passowrd: string) => Promise<boolean>;
+    signout: () => void;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+export const AuthContext = createContext<AuthContextType>(null!);
+
 export const AuthProvider = ({children} : {children: JSX.Element}) => {
+    
 
     const [user, setUser] = useState<User | null>(null)
     const api = useApi()
@@ -23,16 +32,15 @@ export const AuthProvider = ({children} : {children: JSX.Element}) => {
     }, [api]);
 
     const signin = async (login:string, senha: string) => {
-        try {
-            const data = await api.signin(login , senha);    
-            console.log("paçoca")
+        try {            
+            const data = await api.signin(login , senha);
             if(data.token && data.user){ 
                 saveToken(data.token)
                 return true
             }
             return false;
         }catch (error) {
-            console.error(error);
+            console.log(error);
             return false;
         }
         
