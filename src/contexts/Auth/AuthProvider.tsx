@@ -19,8 +19,7 @@ export const AuthProvider = ({children} : {children: JSX.Element}) => {
 
     
     useEffect(() => {        
-        validateToken();
-        console.log("validei")
+        validateToken();        
     }, []);
 
     const validateToken = async () => {
